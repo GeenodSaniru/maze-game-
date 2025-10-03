@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Maze Escape Game</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+	<header class="top-bar">
+		<h1 class="title">Maze Escape</h1>
+		<div class="status">
+			<div class="status-item"><span>Level:</span> <strong id="levelText">1</strong></div>
+			<div class="status-item"><span>Timer:</span> <strong id="timerText">60</strong>s</div>
+			<div class="status-item"><span>Score:</span> <strong id="scoreText">0</strong></div>
+			<div class="status-item"><span>High Score:</span> <strong id="highScoreText">0</strong></div>
+		</div>
+		<div class="controls">
+			<button id="restartBtn" class="btn">Restart</button>
+			<button id="muteBtn" class="btn" aria-pressed="false">🔊 Sound</button>
+		</div>
+	</header>
+
+	<main class="game-wrapper">
+		<canvas id="gameCanvas" width="720" height="540" aria-label="Maze canvas" role="img"></canvas>
+
+		<!-- On-screen joystick for mobile -->
+		<div class="joystick" id="joystick">
+			<div class="joy-row">
+				<button class="joy-btn" data-dir="up" aria-label="Up">▲</button>
+			</div>
+			<div class="joy-row">
+				<button class="joy-btn" data-dir="left" aria-label="Left">◀</button>
+				<button class="joy-btn" data-dir="down" aria-label="Down">▼</button>
+				<button class="joy-btn" data-dir="right" aria-label="Right">▶</button>
+			</div>
+		</div>
+	</main>
+
+	<!-- Start Menu -->
+	<section class="overlay" id="startMenu">
+		<div class="start-screen">
+			<h1 class="game-title">MAZE ESCAPE</h1>
+			<div class="instructions">
+				<h3>Instructions</h3>
+				<p>Navigate through 5 increasingly difficult mazes while avoiding the enemy!</p>
+				<p>Reach the glowing green exit before time runs out.</p>
+				<p>Each level has less time and a smarter enemy.</p>
+			</div>
+			<div class="controls-info">
+				<h3>Controls</h3>
+				<p><strong>Desktop:</strong> Arrow Keys or WASD</p>
+				<p><strong>Mobile:</strong> On-screen joystick</p>
+			</div>
+			<div class="player-setup">
+				<label for="playerName">Enter your name:</label>
+				<input type="text" id="playerName" placeholder="Player" maxlength="20">
+			</div>
+			<button id="startGameBtn" class="btn primary large">START GAME</button>
+		</div>
+	</section>
+
+	<!-- Overlay popups -->
+	<section class="overlay hidden" id="overlay">
+		<div class="popup" id="popup">
+			<h2 id="popupTitle">Level Cleared 🎉</h2>
+			<p id="popupMessage">Get ready for the next level!</p>
+			<button id="nextBtn" class="btn primary">Continue</button>
+		</div>
+	</section>
+
+	<!-- Leaderboard -->
+	<section class="leaderboard" id="leaderboard">
+		<h3>Leaderboard (Top 5)</h3>
+		<ol id="leaderboardList"></ol>
+	</section>
+
+	<!-- Audio elements (fallback, we also synthesize if blocked) -->
+	<audio id="moveSfx" preload="auto"></audio>
+	<audio id="winSfx" preload="auto"></audio>
+	<audio id="alertSfx" preload="auto"></audio>
+	<audio id="bgm" preload="auto" loop></audio>
+
+	<script src="script.js"></script>
+</body>
+</html>

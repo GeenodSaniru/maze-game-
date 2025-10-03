@@ -1,0 +1,248 @@
+/* Maze Escape Game - Neon Theme */
+:root {
+	--bg: #0b0f1a;
+	--bg-2: #0f1424;
+	--text: #e6f0ff;
+	--neon-blue: #4dd6ff;
+	--neon-purple: #a66bff;
+	--neon-yellow: #ffd84d;
+	--neon-green: #52ffa8;
+	--danger: #ff4d6d;
+	--panel: rgba(255, 255, 255, 0.06);
+	--panel-border: rgba(255, 255, 255, 0.15);
+	--shadow-1: 0 0 12px rgba(77, 214, 255, 0.5), 0 0 30px rgba(166, 107, 255, 0.3);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+	margin: 0;
+	font-family: 'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	background: radial-gradient(1200px 800px at 20% 10%, #0f1b35 0%, var(--bg) 60%), linear-gradient(160deg, var(--bg-2), var(--bg));
+	color: var(--text);
+	display: flex;
+	flex-direction: column;
+}
+
+.top-bar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 16px;
+	background: linear-gradient(180deg, rgba(15, 20, 36, 0.95), rgba(11, 15, 26, 0.75));
+	backdrop-filter: blur(6px);
+	border-bottom: 1px solid var(--panel-border);
+}
+
+.title {
+	margin: 0;
+	font-weight: 800;
+	letter-spacing: 2px;
+	text-shadow: 0 0 8px rgba(166, 107, 255, 0.6), 0 0 18px rgba(77, 214, 255, 0.4);
+}
+
+.status {
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+.status-item {
+	background: var(--panel);
+	border: 1px solid var(--panel-border);
+	padding: 6px 10px;
+	border-radius: 10px;
+	box-shadow: var(--shadow-1);
+}
+.status-item span { opacity: 0.8; margin-right: 6px; }
+
+.controls { display: flex; gap: 10px; }
+
+.btn {
+	background: transparent;
+	color: var(--text);
+	border: 1px solid var(--panel-border);
+	padding: 8px 14px;
+	border-radius: 12px;
+	cursor: pointer;
+	transition: transform 0.08s ease, box-shadow 0.2s ease, background 0.2s ease;
+	box-shadow: var(--shadow-1);
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn.primary {
+	background: linear-gradient(90deg, rgba(77,214,255,0.12), rgba(166,107,255,0.12));
+	border-color: var(--neon-blue);
+}
+
+.game-wrapper {
+	flex: 1;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 20px;
+	padding: 18px;
+	align-items: start;
+}
+
+#gameCanvas {
+	width: 100%;
+	max-width: 900px;
+	aspect-ratio: 4 / 3;
+	border-radius: 16px;
+	border: 1px solid var(--panel-border);
+	background: radial-gradient(800px 600px at 50% 50%, rgba(77,214,255,0.08), rgba(166,107,255,0.08) 40%, transparent 70%), #060913;
+	box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(166,107,255,0.15), inset 0 0 120px rgba(77,214,255,0.1);
+}
+
+.leaderboard {
+	background: var(--panel);
+	border: 1px solid var(--panel-border);
+	padding: 12px 14px;
+	border-radius: 14px;
+	box-shadow: var(--shadow-1);
+	min-width: 220px;
+}
+
+.leaderboard h3 { margin: 6px 0 8px; }
+.leaderboard ol { margin: 0; padding-left: 18px; }
+.leaderboard li { margin-bottom: 6px; }
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	background: radial-gradient(600px 400px at 50% 50%, rgba(77,214,255,0.1), rgba(11,15,26,0.85));
+	backdrop-filter: blur(2px);
+}
+.hidden { display: none; }
+
+.start-screen {
+	background: linear-gradient(180deg, rgba(15, 20, 36, 0.95), rgba(11, 15, 26, 0.95));
+	border: 1px solid var(--panel-border);
+	border-radius: 20px;
+	padding: 30px 40px;
+	text-align: center;
+	max-width: 600px;
+	width: 90%;
+	box-shadow: 0 0 30px rgba(166, 107, 255, 0.3), 0 0 60px rgba(77, 214, 255, 0.2);
+	animation: popIn 300ms ease-out both;
+}
+
+.game-title {
+	font-size: 3.5rem;
+	font-weight: 800;
+	letter-spacing: 4px;
+	margin: 0 0 30px 0;
+	text-shadow: 0 0 20px rgba(166, 107, 255, 0.8), 0 0 40px rgba(77, 214, 255, 0.6);
+	background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-yellow));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.instructions, .controls-info, .player-setup {
+	margin: 20px 0;
+	text-align: left;
+}
+
+.instructions h3, .controls-info h3 {
+	color: var(--neon-blue);
+	margin: 0 0 10px 0;
+	font-size: 1.2rem;
+}
+
+.instructions p, .controls-info p {
+	margin: 8px 0;
+	opacity: 0.9;
+	line-height: 1.4;
+}
+
+.player-setup {
+	text-align: center;
+	margin: 30px 0;
+}
+
+.player-setup label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 600;
+	color: var(--neon-yellow);
+}
+
+.player-setup input {
+	background: var(--panel);
+	border: 1px solid var(--panel-border);
+	color: var(--text);
+	padding: 12px 16px;
+	border-radius: 12px;
+	font-size: 1.1rem;
+	width: 200px;
+	text-align: center;
+	box-shadow: var(--shadow-1);
+}
+
+.player-setup input:focus {
+	outline: none;
+	border-color: var(--neon-blue);
+	box-shadow: 0 0 15px rgba(77, 214, 255, 0.3);
+}
+
+.btn.large {
+	padding: 15px 30px;
+	font-size: 1.2rem;
+	font-weight: 600;
+	margin-top: 20px;
+}
+
+.popup {
+	background: linear-gradient(180deg, rgba(15, 20, 36, 0.95), rgba(11, 15, 26, 0.95));
+	border: 1px solid var(--panel-border);
+	border-radius: 16px;
+	padding: 18px 20px;
+	text-align: center;
+	box-shadow: 0 0 20px rgba(166, 107, 255, 0.2), 0 0 40px rgba(77, 214, 255, 0.15);
+	animation: popIn 260ms ease-out both;
+}
+
+@keyframes popIn {
+	0% { transform: translateY(10px) scale(0.98); opacity: 0; }
+	100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Joystick */
+.joystick { display: none; }
+@media (pointer: coarse), (hover: none) {
+	.joystick {
+		display: grid;
+		gap: 8px;
+		align-items: center;
+		justify-items: center;
+		padding: 10px;
+	}
+}
+.joy-row { display: flex; gap: 10px; }
+.joy-btn {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	border: 1px solid var(--panel-border);
+	background: radial-gradient(circle at 40% 30%, rgba(77,214,255,0.18), rgba(166,107,255,0.18));
+	color: var(--text);
+	font-size: 18px;
+	cursor: pointer;
+	box-shadow: var(--shadow-1);
+}
+.joy-btn:active { transform: scale(0.97); }
+
+/* Responsive */
+@media (max-width: 920px) {
+	.game-wrapper { grid-template-columns: 1fr; }
+	#gameCanvas { max-width: 100%; }
+	.leaderboard { order: 2; }
+}
